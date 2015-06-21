@@ -51,4 +51,6 @@ If you want to run the compiled code, download Jasmin from http://jasmin.sourcef
 # Todo List
 * Check if the attributes of a function call are all correct.
 * Add comments
+* Add ++ and --
+* Check if the value returned by a function is being assigned to something. Otherwise pop the value.
 * ... (add more)
