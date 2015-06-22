@@ -22,7 +22,8 @@ ListaFuncoes
       | Funcao { insereDelimitadorFuncao(); }
       ;
 
-Funcao: TipoRetorno TID TAPAR DeclParametros TFPAR BlocoPrincipal { insereFuncaoComPar(&($4.listaParametros), $1.tipo, $2.id); }
+Funcao
+      : TipoRetorno TID TAPAR DeclParametros TFPAR BlocoPrincipal { insereFuncaoComPar(&($4.listaParametros), $1.tipo, $2.id); }
       | TipoRetorno TID TAPAR TFPAR BlocoPrincipal { insereFuncaoSemPar($1.tipo, $2.id); }
       ;
 
