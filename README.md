@@ -53,4 +53,5 @@ If you want to run the compiled code, download Jasmin from http://jasmin.sourcef
 * Add comments
 * Add ++ and --
 * Check if the value returned by a function is being assigned to something. Otherwise pop the value.
+* Check if the return of a function is valid. (int max() is actually returning an int)
 * ... (add more)
