@@ -152,7 +152,6 @@ void incrementaStack(int i);
 void decrementaStack(int i);
 
 void corrigir(Lista *l, int label);
-void corrigirIDsMain();
 void merge(Lista *l_dest, Lista *l1, Lista *l2);
 void merge2(Lista *l_dest, Lista*l1);
 int novoLabel();

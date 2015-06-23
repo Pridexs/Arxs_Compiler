@@ -10,7 +10,7 @@
 
 .method public static max(II)I
 	.limit stack 5
-	.limit locals 3
+	.limit locals 4
 	iload 0
 	iload 1
 	if_icmpgt l1
@@ -26,7 +26,7 @@ l2:
 
 .method public static main([Ljava/lang/String;)V
 	.limit stack 5
-	.limit locals 3
+	.limit locals 4
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "Type number a:"
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
@@ -35,7 +35,7 @@ l2:
 	getstatic java/lang/System/in Ljava/io/InputStream;
 	invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V
 	invokevirtual java/util/Scanner/nextInt()I
-	istore 0
+	istore 1
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "Type number b:"
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
@@ -44,13 +44,13 @@ l2:
 	getstatic java/lang/System/in Ljava/io/InputStream;
 	invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V
 	invokevirtual java/util/Scanner/nextInt()I
-	istore 1
-	iload 0
-	iload 1
-	invokestatic example/max(II)I
 	istore 2
-	getstatic java/lang/System/out Ljava/io/PrintStream;
+	iload 1
 	iload 2
+	invokestatic example/max(II)I
+	istore 3
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	iload 3
 	invokevirtual java/io/PrintStream/println(I)V
 	return
 .end method

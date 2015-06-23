@@ -38,12 +38,8 @@ DeclParametros
       ;
 
 BlocoPrincipal
-      : TACHAVE J Declaracoes ListaCmd TFCHAVE
-      | TACHAVE J ListaCmd TFCHAVE
-      ;
-      
-J
-      : { corrigirIDsMain(); }
+      : TACHAVE Declaracoes ListaCmd TFCHAVE
+      | TACHAVE ListaCmd TFCHAVE
       ;
 
 Declaracoes
