@@ -4,13 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-*
-*   TODO:
-        CHECAR SE TODOS OS ATRIBUTOS ESTAO CORRETOS (DE UMA FUNCAO).
-*
-*/
-
 Lista tabelaSimbolos;
 Lista listaInstrucoes;
 Lista listaFuncoes;
@@ -22,11 +15,6 @@ unsigned contInstrucao = 0;
 unsigned contFuncao = 0;
 // Conta quantos parametros uma funcao tem. Zera apos inserir a funcao
 unsigned contParametro = 0;
-
-// Variavel para contar se a funcao ja foi adicionado na lista.
-// Se contFuncao == nFuncoes, entao e necessario adicionar e 
-// inicializar uma nova struct Funcao na Lista.
-unsigned nFuncoes = 0;
 
 unsigned contStackSize = 0;
 unsigned maiorStack = 0; 
