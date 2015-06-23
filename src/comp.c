@@ -364,6 +364,30 @@ void geraRetorno(unsigned tipo)
         geraInstrucao(NULO, INST_RETURN, NULO, NULO, NULO_STR);
 }
 
+void geraIncrementa(char id[32], unsigned tipo, int n)
+{
+    unsigned tipoID = buscaTipo(id);
+
+    if (tipoID == tipo)
+    {
+        unsigned posID = buscaPos(id);
+        // n == 1 vou incrementar apenas por 1 
+        if (n == 1) {
+           
+            geraInstrucao(NULO, INST_IINC, posID, n, NULO_STR);
+        } else
+        {
+            geraInstrucao(NULO, INST_ILOAD, posID, NULO, NULO_STR);
+            geraInstrucao(NULO, INST_IADD, NULO, NULO, NULO_STR);
+            geraInstrucao(NULO, INST_ISTORE, posID, NULO, NULO_STR);
+        }
+    } 
+    else
+    {
+        printf("Tentando incrementar %s com tipos diferentes!\n", id);
+    }
+}
+
 void empilhaInteiro(int num)
 {
     incrementaStack(1);
@@ -717,6 +741,8 @@ void geraArquivoFinal()
                     fprintf(fp, "\tareturn\n"); break;
                 case INST_RETURN:
                     fprintf(fp, "\treturn\n"); break;
+                case INST_IINC:
+                    fprintf(fp, "\tiinc %u %d\n", i.p1, i.p2); break;
 
                 default:
                     printf("ERRO! INSTRUCAO %d NAO DEFINIDA!\n", i.inst);

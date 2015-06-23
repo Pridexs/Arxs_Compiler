@@ -9,6 +9,9 @@ int max(int a, int b)
 
 {
     int i,j, biggest;
+    i = 0;
+    i++;
+    i += 20;
 
     print("Type number a:");
     read(i);

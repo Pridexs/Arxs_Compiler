@@ -49,6 +49,7 @@
 #define INST_IRETURN         2036
 #define INST_ARETURN         2037
 #define INST_RETURN          2038
+#define INST_IINC            2039
 
 #define CMP_EQUAL            3000
 #define CMP_NEQUAL           3001
@@ -138,6 +139,7 @@ void geraInstrucao(unsigned label, int inst, int p1, int p2, char str[256] );
 void geraChamadaFuncao(char id[32]);
 void geraChamadaFuncaoComPar(char id[32], unsigned nPar);
 void geraRetorno(unsigned tipo);
+void geraIncrementa(char id[32], unsigned tipo, int n);
 
 void empilhaInteiro(int num);
 void empilhaString(char str[256]);

@@ -29,6 +29,10 @@ literal \"(\\.|[^"])*\"
 "<" {return TMENOR;}
 "{" {return TACHAVE;}
 "}" {return TFCHAVE;}
+"+=" {return TINC_N;}
+"-=" {return TDEC_N;}
+"++" {return TINC;}
+"--" {return TDEC;}
 "+" {return TADD;}
 "-" {return TSUB;}
 "*" {return TMUL;}

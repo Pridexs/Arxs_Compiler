@@ -9,7 +9,7 @@
 .end method
 
 .method public static max(II)I
-	.limit stack 5
+	.limit stack 6
 	.limit locals 4
 	iload 0
 	iload 1
@@ -25,8 +25,15 @@ l2:
 .end method
 
 .method public static main([Ljava/lang/String;)V
-	.limit stack 5
+	.limit stack 6
 	.limit locals 4
+	iconst_0
+	istore 1
+	iinc 1 1
+	bipush 20
+	iload 1
+	iadd
+	istore 1
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "Type number a:"
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V

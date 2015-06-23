@@ -5,7 +5,7 @@
 #define YYSTYPE struct Atributo
 %}
 
-%token TSTRING TVOID TINT TRETURN TPRINT TREAD TIF TWHILE TELSE TMEIGUAL TMAIGUAL TIGUAL TDIFER TATRIB TMAIOR TMENOR TACHAVE TFCHAVE TADD TSUB TMUL TDIV TAPAR TFPAR TFIM TNUM TVIRG TPVIRG TID TLITERAL TNOT TAND TOR TERROR EOP
+%token TSTRING TVOID TINT TRETURN TPRINT TREAD TIF TWHILE TELSE TMEIGUAL TMAIGUAL TIGUAL TDIFER TATRIB TMAIOR TMENOR TACHAVE TFCHAVE TADD TSUB TMUL TDIV TAPAR TFPAR TFIM TNUM TVIRG TPVIRG TID TLITERAL TNOT TAND TOR TERROR EOP TINC TDEC TINC_N TDEC_N
 
 %%
 Inicio
@@ -81,7 +81,19 @@ Comando
       | CmdEscrita
       | CmdLeitura
       | ChamadaFuncao
+      | CmdIncrementa
+      | CmdDecrementa
       | Retorno
+      ;
+
+CmdIncrementa
+      : TID TINC TPVIRG { geraIncrementa($1.id, TIPO_INT, 1); }
+      | TID TINC_N ExpressaoAritmetica TPVIRG { geraIncrementa($1.id, $3.tipo, 0);}
+      ;
+
+CmdDecrementa
+      : TID TDEC TPVIRG
+      | TID TDEC_N ExpressaoAritmetica TPVIRG
       ;
 
 Retorno
