@@ -440,16 +440,6 @@ void corrigir(Lista *l, int label)
 void corrigirIDsMain()
 {
     contPos++;
-    /*
-    int i;
-    struct Simbolo s;
-    for (i = 0; i < contPos; i++)
-    {
-        leNaPosicao(&tabelaSimbolos, &s, i);
-        s.pos += 1;
-        modificaNaPosicao(&tabelaSimbolos, &s, i);
-    }
-    */
 }
 
 void merge(Lista *l_dest, Lista *l1, Lista *l2)
