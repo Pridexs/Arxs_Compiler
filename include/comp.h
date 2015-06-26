@@ -61,6 +61,7 @@
 #define OP_ADD               3007
 #define OP_DIV               3008
 #define OP_SUB               3009
+#define OP_IINC              3010
 
 struct Atributo {
     unsigned  tipo;
@@ -108,6 +109,8 @@ void inicializa();
 // Insere uma lista de ID's na tabela de simbolos
 void insereTabelaSimbolos(Lista *l, int tipo);
 void insereParametro(Lista *l, unsigned tipo, char id[32]);
+// Insere um parametro numa lista sem alterar a tabela de simbolos
+void insereParametroSimples(Lista *l, unsigned tipo);
 void insereFuncaoComPar(Lista *lParam, unsigned tipoRetorno, char id[32]);
 void insereFuncaoSemPar(unsigned tipoRetorno, char id[32]);
 void insereID(Lista *l, char id[32]);
@@ -137,9 +140,10 @@ void geraOperacao(int comp);
 void geraRead(int tipo, int pos);
 void geraInstrucao(unsigned label, int inst, int p1, int p2, char str[256] );
 void geraChamadaFuncao(char id[32]);
-void geraChamadaFuncaoComPar(char id[32], unsigned nPar);
+void geraChamadaFuncaoComPar(char id[32], Lista *l);
 void geraRetorno(unsigned tipo);
 void geraIncrementa(char id[32], unsigned tipo, int n);
+void geraDecrementa(char id[32], unsigned tipo, int n);
 
 void empilhaInteiro(int num);
 void empilhaString(char str[256]);

@@ -18,13 +18,17 @@ Programa
       ;
 
 ListaFuncoes
-      : ListaFuncoes Funcao { insereDelimitadorFuncao(); }
-      | Funcao { insereDelimitadorFuncao(); }
+      : ListaFuncoes FuncaoGeral { insereDelimitadorFuncao(); }
+      | FuncaoGeral { insereDelimitadorFuncao(); }
+      ;
+
+FuncaoGeral
+      : Funcao BlocoPrincipal
       ;
 
 Funcao
-      : TipoRetorno TID TAPAR DeclParametros TFPAR BlocoPrincipal { insereFuncaoComPar(&($4.listaParametros), $1.tipo, $2.id); }
-      | TipoRetorno TID TAPAR TFPAR BlocoPrincipal { insereFuncaoSemPar($1.tipo, $2.id); }
+      : TipoRetorno TID TAPAR DeclParametros TFPAR { insereFuncaoComPar(&($4.listaParametros), $1.tipo, $2.id); }
+      | TipoRetorno TID TAPAR TFPAR { insereFuncaoSemPar($1.tipo, $2.id); }
       ;
 
 TipoRetorno
@@ -81,19 +85,31 @@ Comando
       | CmdEscrita
       | CmdLeitura
       | ChamadaFuncao
+      | CmdIncrementaUnario
+      | CmdDecrementaUnario
       | CmdIncrementa
       | CmdDecrementa
       | Retorno
       ;
 
+CmdIncrementaUnario
+      : TID TINC TPVIRG { geraIncrementa($1.id, TIPO_INT, OP_IINC); }
+      ;
+
+CmdDecrementaUnario
+      : TID TDEC TPVIRG { geraDecrementa($1.id, TIPO_INT, OP_IINC); }
+      ;
+
 CmdIncrementa
-      : TID TINC TPVIRG { geraIncrementa($1.id, TIPO_INT, 1); }
-      | TID TINC_N ExpressaoAritmetica TPVIRG { geraIncrementa($1.id, $3.tipo, 0);}
+      : CarregaID TINC_N ExpressaoAritmetica TPVIRG { geraIncrementa($1.id, $3.tipo, 0);}
       ;
 
 CmdDecrementa
-      : TID TDEC TPVIRG
-      | TID TDEC_N ExpressaoAritmetica TPVIRG
+      : CarregaID TDEC_N ExpressaoAritmetica TPVIRG { geraDecrementa($1.id, $3.tipo, 0); }
+      ;
+
+CarregaID
+      : TID { strcpy($$.id, $1.id); if(buscaTipo($1.id) == TIPO_INT) empilhaVarInt($1.id); else error(); }
       ;
 
 Retorno
@@ -145,18 +161,18 @@ CmdLeitura
       ;
 
 ChamadaFuncao
-      : TID TAPAR ListaParametros TFPAR TPVIRG { geraChamadaFuncaoComPar($1.id, $3.nParametros); geraChamadaFuncaoComPar($1.id, $3.nParametros); }
+      : TID TAPAR ListaParametros TFPAR TPVIRG { geraChamadaFuncaoComPar($1.id, $3.nParametros); }
       | TID TAPAR TFPAR TPVIRG { geraChamadaFuncao($1.id); }
       ;
 
 ChamadaFuncaoSemPVIRG
-      : TID TAPAR ListaParametros TFPAR { $$.tipo = buscaTipoFuncao($1.id); geraChamadaFuncaoComPar($1.id, $3.nParametros); }
+      : TID TAPAR ListaParametros TFPAR { $$.tipo = buscaTipoFuncao($1.id); geraChamadaFuncaoComPar($1.id, &$3.listaParametros); }
       | TID TAPAR TFPAR { $$.tipo = buscaTipoFuncao($1.id); geraChamadaFuncao($1.id); }
       ;
 
 ListaParametros
-      : ListaParametros TVIRG ExpressaoAritmetica { $$.nParametros += 1; }
-      | ExpressaoAritmetica { $$.nParametros = 1; }
+      : ListaParametros TVIRG ExpressaoAritmetica { insereParametroSimples(&$$.listaParametros, $3.tipo); }
+      | ExpressaoAritmetica { inicializaListaParametros(&$$.listaParametros); insereParametroSimples(&$$.listaParametros, $1.tipo);  }
       ;
 
 ExpressaoAritmetica

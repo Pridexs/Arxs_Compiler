@@ -49,9 +49,7 @@ Run the 'make' command in your terminal. Then, run ./arxs name_of_file.extension
 If you want to run the compiled code, download Jasmin from http://jasmin.sourceforge.net/ and run 'java -jar jasmin.jar name_of_file.jout' This will generate a .class that can be run normally (hopefully).
 
 # Todo List
-* Check if the attributes of a function call are all correct.
 * Add comments
-* Add ++ and --
 * Check if the value returned by a function is being assigned to something. Otherwise pop the value.
 * Check if the return of a function is valid. (int max() is actually returning an int)
 * ... (add more)

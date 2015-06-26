@@ -198,6 +198,13 @@ void insereParametro(Lista *l, unsigned tipo, char id[32])
     contPos++;
 }
 
+void insereParametroSimples(Lista *l, unsigned tipo)
+{
+    struct Parametro p;
+    p.tipo = tipo;
+    insereNoFim(l, &p);
+}
+
 void insereDelimitadorFuncao()
 {
     geraInstrucao(NULO, INST_DELIMITADORFUNC, NULO, NULO, NULO_STR);
@@ -332,10 +339,17 @@ void geraChamadaFuncao(char id[32])
         printf("Funcao %s não declarada!\n", id);
         exit(-1);
     }
+
+    if (f.nParametros != 0)
+    {
+        printf("Funcao %s chamada sem parametros!\n", id);
+        exit(-1);
+    }
+
     geraInstrucao(NULO, INST_INVOKESTATIC, f.pos, NULO, f.id);
 }
 
-void geraChamadaFuncaoComPar(char id[32], unsigned nPar)
+void geraChamadaFuncaoComPar(char id[32], Lista *l)
 {
     struct Funcao f;
     strcpy(f.id, id);
@@ -345,11 +359,39 @@ void geraChamadaFuncaoComPar(char id[32], unsigned nPar)
         exit(-1);
     }
 
-    if (f.nParametros != nPar)
+    // Checagem de parametros
+    if (f.nParametros != 0)
     {
-        printf("Chamada de funcao %s com numero de parametros inconsistentes!\n", id);
+        int i = 0;
+        for (int i = 0; i < f.nParametros; i++)
+        {
+            struct Parametro p1, p2;
+            leNaPosicao(&f.listaParametros, &p1, i);
+            if ( removeDoInicio(l, &p2) == ERRO_LISTA_VAZIA )
+            {
+                printf("Numero de parametros da funcao %s incosistente!\n", id);
+                exit(-1);
+            }
+            if (p1.tipo != p2.tipo)
+            {
+                printf("Chamada de funcao %s com parametros de tipos diferentes!\n", id);
+                exit(-1);
+            }
+        }
+        // Se ainda sobrar argumentos, tem argumentos a mais do que o correto
+        if (!listaVazia(l))
+        {
+            printf("Chamada de funcao %s com argumentos a mais que o correto!\n", id);
+            exit(-1);
+        }
+
+    }
+    else
+    {
+        printf("Funcao %s nao tem parametros mas esta sendo chamada com!\n", id);
         exit(-1);
     }
+    
 
     geraInstrucao(NULO, INST_INVOKESTATIC, f.pos, NULO, f.id);
 }
@@ -371,14 +413,37 @@ void geraIncrementa(char id[32], unsigned tipo, int n)
     if (tipoID == tipo)
     {
         unsigned posID = buscaPos(id);
-        // n == 1 vou incrementar apenas por 1 
-        if (n == 1) {
-           
-            geraInstrucao(NULO, INST_IINC, posID, n, NULO_STR);
-        } else
+        if (n == OP_IINC) 
         {
-            geraInstrucao(NULO, INST_ILOAD, posID, NULO, NULO_STR);
+           
+            geraInstrucao(NULO, INST_IINC, posID, 1, NULO_STR);
+        }
+        else
+        {
             geraInstrucao(NULO, INST_IADD, NULO, NULO, NULO_STR);
+            geraInstrucao(NULO, INST_ISTORE, posID, NULO, NULO_STR);
+        }
+    } 
+    else
+    {
+        printf("Tentando incrementar %s com tipos diferentes!\n", id);
+    }
+}
+
+void geraDecrementa(char id[32], unsigned tipo, int n)
+{
+    unsigned tipoID = buscaTipo(id);
+
+    if (tipoID == tipo)
+    {
+        unsigned posID = buscaPos(id);
+        if (n == OP_IINC) 
+        {
+            geraInstrucao(NULO, INST_IINC, posID, -1, NULO_STR);
+        } 
+        else
+        {
+            geraInstrucao(NULO, INST_ISUB, NULO, NULO, NULO_STR);
             geraInstrucao(NULO, INST_ISTORE, posID, NULO, NULO_STR);
         }
     } 
@@ -535,7 +600,7 @@ unsigned buscaTipo(char id[32])
 
     if (buscaElemento(&tabelaSimbolos, &s, compara_simbolos) == ERRO_ELEMENTO_NAO_ENCONTRADO)
     {
-        printf("Funcao com id %s nao foi declarada!\n", id);
+        printf("Variavel com id %s nao foi declarada!\n", id);
         exit(-1);
     }
 
@@ -563,7 +628,7 @@ unsigned buscaTipoFuncao(char id[32])
 
     if (buscaElemento(&listaFuncoes, &f, compara_simbolos) == ERRO_ELEMENTO_NAO_ENCONTRADO)
     {
-        printf("Variavel com id %s nao foi declarada!\n", id);
+        printf("Funcao com id %s nao foi declarada!\n", id);
         exit(-1);
     }
 

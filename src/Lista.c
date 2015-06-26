@@ -281,7 +281,7 @@ int buscaElemento(Lista *l, void *info, int (*compara_info)(void *, void *))
 {
     Elemento *aux = l->cabeca;
     if (aux == NULL)
-        return ERRO_LISTA_VAZIA;
+        return ERRO_ELEMENTO_NAO_ENCONTRADO;
 
     while (aux != NULL)
     {
