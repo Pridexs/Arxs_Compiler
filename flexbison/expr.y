@@ -13,8 +13,12 @@ Inicio
       ;
 
 Programa
-      : ListaFuncoes BlocoPrincipal
-      | BlocoPrincipal
+      : ListaFuncoes J BlocoPrincipal
+      | J BlocoPrincipal
+      ;
+
+J
+      : { corrigirIDsMain(); }
       ;
 
 ListaFuncoes
@@ -23,7 +27,7 @@ ListaFuncoes
       ;
 
 FuncaoGeral
-      : Funcao BlocoPrincipal
+      : Funcao BlocoPrincipal { corrigirStack_e_Local(); }
       ;
 
 Funcao
@@ -42,12 +46,8 @@ DeclParametros
       ;
 
 BlocoPrincipal
-      : TACHAVE J Declaracoes ListaCmd TFCHAVE
-      | TACHAVE J ListaCmd TFCHAVE
-      ;
-      
-J
-      : { corrigirIDsMain(); }
+      : TACHAVE Declaracoes ListaCmd TFCHAVE
+      | TACHAVE ListaCmd TFCHAVE
       ;
 
 Declaracoes

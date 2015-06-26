@@ -9,8 +9,8 @@
 .end method
 
 .method public static max(II)I
-	.limit stack 5
-	.limit locals 4
+	.limit stack 2
+	.limit locals 2
 	iload 0
 	iload 1
 	if_icmpgt l1
@@ -25,7 +25,7 @@ l2:
 .end method
 
 .method public static main([Ljava/lang/String;)V
-	.limit stack 5
+	.limit stack 3
 	.limit locals 4
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "Type number a:"

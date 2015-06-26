@@ -9,7 +9,6 @@ Lista listaInstrucoes;
 Lista listaFuncoes;
 
 unsigned contPos = 0;
-unsigned contMaiorPos = 1;
 unsigned contLabel = 0;
 unsigned contInstrucao = 0;
 unsigned contFuncao = 0;
@@ -17,7 +16,7 @@ unsigned contFuncao = 0;
 unsigned contParametro = 0;
 
 unsigned contStackSize = 0;
-unsigned maiorStack = 0; 
+unsigned maiorStackSize = 0; 
 
 int inicializado = 0;
 
@@ -173,6 +172,7 @@ void insereFuncaoSemPar(unsigned tipoRetorno, char id[32])
     f.tipoRetorno = tipoRetorno;
     f.pos = contFuncao;
     f.nParametros = contParametro;
+    f.nStack = maiorStackSize;
 
     insereNoFim(&listaFuncoes, &f);
     contParametro = 0;
@@ -209,10 +209,6 @@ void insereDelimitadorFuncao()
 {
     geraInstrucao(NULO, INST_DELIMITADORFUNC, NULO, NULO, NULO_STR);
    
-    if (contPos > contMaiorPos)
-        contMaiorPos = contPos;
-    contPos = 0;
-    // contlabel tambem reseta??
     limpa_lista(&tabelaSimbolos);
 }
 
@@ -519,6 +515,18 @@ void corrigirIDsMain()
     contPos++;
 }
 
+void corrigirStack_e_Local()
+{
+    struct Funcao f;
+    leNaPosicao(&listaFuncoes, &f, contFuncao-1);
+    f.nStack = maiorStackSize;
+    f.nLocals = contPos;
+    modificaNaPosicao(&listaFuncoes, &f, contFuncao-1);
+    contPos = 0;
+    maiorStackSize = 0;
+    contStackSize = 0;
+}
+
 void merge(Lista *l_dest, Lista *l1, Lista *l2)
 {
     unsigned u;
@@ -693,8 +701,17 @@ void geraArquivoFinal()
 
         }
 
-        fprintf(fp, "\t.limit stack %d\n", maiorStack);
-        fprintf(fp, "\t.limit locals %d\n", contPos);
+        if (estouMain)
+        {
+            fprintf(fp, "\t.limit stack %d\n", maiorStackSize);
+            fprintf(fp, "\t.limit locals %d\n", contPos);
+        }
+        else
+        {
+            fprintf(fp, "\t.limit stack %d\n", f.nStack);
+            fprintf(fp, "\t.limit locals %d\n", f.nLocals);
+        }
+        
 
         while (!listaVazia(&listaInstrucoes))
         {
@@ -835,8 +852,8 @@ void incrementaStack(int i)
 {
     //printf("INCREMENTOU %d\n", i);
     contStackSize += i;
-    if (contStackSize > maiorStack)
-        maiorStack = contStackSize;
+    if (contStackSize > maiorStackSize)
+        maiorStackSize = contStackSize;
 }
 
 void decrementaStack(int i)

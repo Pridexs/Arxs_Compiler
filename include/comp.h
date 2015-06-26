@@ -100,6 +100,8 @@ struct Funcao {
     unsigned tipoRetorno;
     unsigned pos;
     unsigned nParametros;
+    unsigned nStack;
+    unsigned nLocals;
     Lista listaParametros;
 };
 
@@ -159,6 +161,7 @@ void decrementaStack(int i);
 
 void corrigir(Lista *l, int label);
 void corrigirIDsMain();
+void corrigirStack_e_Local();
 void merge(Lista *l_dest, Lista *l1, Lista *l2);
 void merge2(Lista *l_dest, Lista*l1);
 int novoLabel();
