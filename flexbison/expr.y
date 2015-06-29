@@ -230,12 +230,12 @@ FatorLogico
       ;
 
 ExpressaoRelacional
-      : ExpressaoAritmetica TMAIOR ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_GTHAN); gerarGOTO(); }
-      | ExpressaoAritmetica TMENOR ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_LTHAN); gerarGOTO(); }
-      | ExpressaoAritmetica TMAIGUAL ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_GEQUAL); gerarGOTO(); }
-      | ExpressaoAritmetica TMEIGUAL ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_LEQUAL); gerarGOTO(); }
-      | ExpressaoAritmetica TIGUAL ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_LEQUAL); gerarGOTO(); }
-      | ExpressaoAritmetica TDIFER ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_NEQUAL); gerarGOTO(); }
+      : ExpressaoAritmetica TMAIOR ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_GTHAN, $1.tipo, $3.tipo); gerarGOTO(); }
+      | ExpressaoAritmetica TMENOR ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_LTHAN, $1.tipo, $3.tipo); gerarGOTO(); }
+      | ExpressaoAritmetica TMAIGUAL ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_GEQUAL, $1.tipo, $3.tipo); gerarGOTO(); }
+      | ExpressaoAritmetica TMEIGUAL ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_LEQUAL, $1.tipo, $3.tipo); gerarGOTO(); }
+      | ExpressaoAritmetica TIGUAL ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_LEQUAL, $1.tipo, $3.tipo); gerarGOTO(); }
+      | ExpressaoAritmetica TDIFER ExpressaoAritmetica { inicializaListaVF(&$$.listav, &$$.listaf); geraComparacao(CMP_NEQUAL, $1.tipo, $3.tipo); gerarGOTO(); }
       ;
 
 %%

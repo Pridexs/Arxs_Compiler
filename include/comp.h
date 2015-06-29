@@ -136,7 +136,7 @@ unsigned buscaTipoFuncao(char id[32]);
 // Gerar instrucoes
 void geraArquivoFinal();
 void geraAtribuicao(char var[32], unsigned tipo1, unsigned tipo2);
-void geraComparacao(int comp);
+void geraComparacao(int comp, unsigned tipo1, unsigned tipo2);
 void gerarGOTO();
 void gerarGOTOLabel(unsigned label);
 void geraOperacao(int comp);

@@ -255,8 +255,14 @@ void geraAtribuicao(char var[32], unsigned tipo1, unsigned tipo2)
     }
 }
 
-void geraComparacao(int comp)
+void geraComparacao(int comp, unsigned t1, unsigned t2)
 {
+    if (t1 != TIPO_INT || t2 != TIPO_INT)
+    {
+        printf("Comparacao de variaveis com tipos incosistentes!\n");
+        exit(-1);
+    }
+
     decrementaStack(2);
 
     switch(comp)
