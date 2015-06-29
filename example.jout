@@ -47,11 +47,26 @@ l2:
 	istore 2
 	iload 1
 	iload 2
-	invokestatic example/max(II)I
-	istore 3
+	if_icmpgt l3
+	goto l4
+l3:
+	iload 2
+	bipush 20
+	if_icmpgt l5
+	goto l4
+l4:
+	iload 2
+	iconst_0
+	if_icmple l5
+	goto l6
+l5:
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-	iload 3
-	invokevirtual java/io/PrintStream/println(I)V
+	ldc "Hi"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+l6:
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "Bye."
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 	return
 .end method
 

@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "comp.h"
 #define YYSTYPE struct Atributo
 %}
@@ -161,7 +162,7 @@ CmdLeitura
       ;
 
 ChamadaFuncao
-      : TID TAPAR ListaParametros TFPAR TPVIRG { geraChamadaFuncaoComPar($1.id, $3.nParametros); }
+      : TID TAPAR ListaParametros TFPAR TPVIRG { geraChamadaFuncaoComPar($1.id, &$3.listaParametros); }
       | TID TAPAR TFPAR TPVIRG { geraChamadaFuncao($1.id); }
       ;
 
@@ -204,14 +205,14 @@ ExpressaoLogica
       : ExpressaoLogica TAND NL FatorLogico 
         {
           corrigir(&$1.listav, $3.label);
-          inicializaListaVF(&$$.listav, &$$.listaf);
+          inicializaListaVFSemIncluir(&$$.listav, &$$.listaf);
           merge(&$$.listaf, &$1.listaf, &$4.listaf);
           merge2(&$$.listav, &$4.listav);
         }
       | ExpressaoLogica TOR NL FatorLogico
         {
           corrigir(&$1.listaf, $3.label);
-          inicializaListaVF(&$$.listav, &$$.listaf);
+          inicializaListaVFSemIncluir(&$$.listav, &$$.listaf);
           merge(&$$.listav, &$1.listav, &$4.listav);
           merge2(&$$.listaf, &$4.listaf);
         }

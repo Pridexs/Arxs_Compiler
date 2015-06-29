@@ -121,6 +121,7 @@ void insereDelimitadorFuncao();
 void inicializaListaIDs(Lista *l);
 void inicializaListaParametros(Lista *l);
 void inicializaListaVF(Lista *v, Lista *f);
+void inicializaListaVFSemIncluir(Lista *v, Lista *f);
 void transfereListaVF(Lista *v, Lista *f, Lista *v_old, Lista *f_old);
 
 void imprimeTabelaSimbolos();

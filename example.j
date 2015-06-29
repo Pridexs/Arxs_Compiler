@@ -15,6 +15,9 @@ int max(int a, int b)
     print("Type number b:");
     read(j);
 
-    biggest = max(i, j);
-    print(biggest);
+    if ( (i > j && j > 20) || (j == 0) )
+    {
+        print("Hi");
+    }
+    print("Bye.");
 }

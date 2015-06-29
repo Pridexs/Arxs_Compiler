@@ -52,6 +52,12 @@ void inicializaListaVF(Lista *v, Lista *f)
 
 }
 
+void inicializaListaVFSemIncluir(Lista *v, Lista *f)
+{
+    inicializa_lista(v, sizeof(unsigned));
+    inicializa_lista(f, sizeof(unsigned));
+}
+
 void transfereListaVF(Lista *v, Lista *f, Lista *v_old, Lista *f_old)
 {
     inicializa_lista(v, sizeof(unsigned));
