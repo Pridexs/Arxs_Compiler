@@ -155,6 +155,12 @@ void insereFuncaoComPar(Lista *lParam, unsigned tipoRetorno, char id[32])
     f.pos = contFuncao;
     f.nParametros = contParametro;
 
+    if (buscaElemento(&listaFuncoes, &f, compara_funcao) != ERRO_ELEMENTO_NAO_ENCONTRADO)
+    {
+        printf("Funcao %s ja foi declarada em outro local!\n", id);
+        exit(-1);
+    }
+
     inicializa_lista(&(f.listaParametros), sizeof(struct Parametro));
     //printf("Funcao nome %s tipo retorno %u pos %u nparame %u\n", f.id, f.tipoRetorno, contPos, contParametro);
     // Mover lista de parametros;
@@ -179,6 +185,12 @@ void insereFuncaoSemPar(unsigned tipoRetorno, char id[32])
     f.pos = contFuncao;
     f.nParametros = contParametro;
     f.nStack = maiorStackSize;
+
+    if (buscaElemento(&listaFuncoes, &f, compara_funcao) != ERRO_ELEMENTO_NAO_ENCONTRADO)
+    {
+        printf("Funcao %s ja foi declarada!\n", id);
+        exit(-1);
+    }
 
     insereNoFim(&listaFuncoes, &f);
     contParametro = 0;
