@@ -383,7 +383,7 @@ void geraChamadaFuncaoComPar(char id[32], Lista *l)
     if (f.nParametros != 0)
     {
         int i = 0;
-        for (int i = 0; i < f.nParametros; i++)
+        for (i = 0; i < f.nParametros; i++)
         {
             struct Parametro p1, p2;
             leNaPosicao(&f.listaParametros, &p1, i);
